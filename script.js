@@ -32,9 +32,9 @@ initTheme();
         const m = now.getMinutes() + s / 60;
         const h = now.getHours() % 12 + m / 60;
 
-        const sDeg = (s / 60) * 360;
-        const mDeg = (m / 60) * 360;
-        const hDeg = (h / 12) * 360;
+        const sDeg = (s / 60) * 360 - 90;
+        const mDeg = (m / 60) * 360 - 90;
+        const hDeg = (h / 12) * 360 - 90;
 
         secondHand.style.transform = `translateY(-50%) rotate(${sDeg}deg)`;
         minuteHand.style.transform = `translateY(-50%) rotate(${mDeg}deg)`;
