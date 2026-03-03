@@ -1,0 +1,307 @@
+:root {
+    --bg-gradient: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    --text-color: #fff;
+    --border-color: rgba(255, 255, 255, 0.06);
+    --bg-overlay: rgba(255, 255, 255, 0.04);
+    --accent-color: #ffd54f;
+    --clock-bg: #0a0f1a;
+    --tick-color: rgba(255, 255, 255, 0.75);
+    --tick-small-color: rgba(255, 255, 255, 0.25);
+}
+
+body.light-mode {
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 50%, #dce4eb 100%);
+    --text-color: #1a1a2e;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --bg-overlay: rgba(0, 0, 0, 0.03);
+    --accent-color: #ff8a65;
+    --clock-bg: #fafafa;
+    --tick-color: rgba(0, 0, 0, 0.6);
+    --tick-small-color: rgba(0, 0, 0, 0.3);
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-gradient);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans TC', 'Helvetica Neue', Arial;
+    color: var(--text-color);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--accent-color);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.container {
+    width: 100%;
+    max-width: 520px;
+    padding: 28px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.clock-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.clock {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.03), transparent 30%), var(--clock-bg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 6px 20px rgba(255, 255, 255, 0.02);
+    border: 8px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+body.light-mode .clock {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 6px 20px rgba(0, 0, 0, 0.02);
+}
+
+.dial::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.dial::after {
+    content: '';
+    position: absolute;
+    inset: 16px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, rgba(255, 107, 74, 0.08), rgba(74, 144, 226, 0.08), rgba(255, 160, 122, 0.08), rgba(255, 107, 74, 0.08));
+}
+
+body.light-mode .dial::after {
+    background: conic-gradient(from 0deg, rgba(255, 107, 74, 0.05), rgba(74, 144, 226, 0.05), rgba(255, 160, 122, 0.05), rgba(255, 107, 74, 0.05));
+}
+
+.numbers {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+}
+
+.number {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--accent-color);
+    transform-origin: center;
+    transition: color 0.3s ease;
+}
+
+.number[data-num="1"] { transform: rotate(30deg) translateY(-130px) rotate(-30deg); }
+.number[data-num="2"] { transform: rotate(60deg) translateY(-130px) rotate(-60deg); }
+.number[data-num="3"] { transform: rotate(90deg) translateY(-130px) rotate(-90deg); }
+.number[data-num="4"] { transform: rotate(120deg) translateY(-130px) rotate(-120deg); }
+.number[data-num="5"] { transform: rotate(150deg) translateY(-130px) rotate(-150deg); }
+.number[data-num="6"] { transform: rotate(180deg) translateY(-130px) rotate(-180deg); }
+.number[data-num="7"] { transform: rotate(210deg) translateY(-130px) rotate(-210deg); }
+.number[data-num="8"] { transform: rotate(240deg) translateY(-130px) rotate(-240deg); }
+.number[data-num="9"] { transform: rotate(270deg) translateY(-130px) rotate(-270deg); }
+.number[data-num="10"] { transform: rotate(300deg) translateY(-130px) rotate(-300deg); }
+.number[data-num="11"] { transform: rotate(330deg) translateY(-130px) rotate(-330deg); }
+.number[data-num="12"] { transform: translateY(-130px); }
+
+body.light-mode .number {
+    color: #ff7043;
+}
+
+.center {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(180deg, #fff, #e0e0e0);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+body.light-mode .center {
+    background: linear-gradient(180deg, #ff8a65, #ff6b4a);
+    box-shadow: 0 2px 6px rgba(255, 107, 74, 0.3);
+}
+
+.hour-hand, .minute-hand, .second-hand {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: 0% 50%;
+    transform: translateX(0) translateY(-50%) rotate(90deg);
+    border-radius: 4px;
+}
+
+.hour-hand {
+    width: 26%;
+    height: 10px;
+    background: linear-gradient(90deg, #ff9a76, #ff6b4a);
+    z-index: 3;
+}
+
+.minute-hand {
+    width: 33%;
+    height: 8px;
+    background: linear-gradient(90deg, #9ad3ff, #4a90e2);
+    z-index: 2;
+}
+
+.second-hand {
+    width: 42%;
+    height: 3px;
+    background: linear-gradient(90deg, #ffd36b, #ff8a00);
+    z-index: 1;
+}
+
+.clock .tick {
+    position: absolute;
+    left: 50%;
+    top: 6px;
+    width: 2px;
+    height: 12px;
+    background: var(--tick-color);
+    transform-origin: 50% 168px;
+    transition: background 0.3s ease;
+}
+
+.clock .tick.small {
+    height: 8px;
+    background: var(--tick-small-color);
+    transition: background 0.3s ease;
+}
+
+.calendar-wrap {
+    margin-top: 22px;
+}
+
+.calendar {
+    display: inline-block;
+    background: var(--bg-overlay);
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+body.light-mode .calendar {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.cal-header button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cal-header button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-color);
+}
+
+body.light-mode .cal-header button:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.month-year {
+    font-weight: 600;
+    min-width: 120px;
+}
+
+.calendar-table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 360px;
+}
+
+.calendar-table th, .calendar-table td {
+    width: 14.28%;
+    text-align: center;
+    padding: 8px 4px;
+    font-size: 0.95rem;
+}
+
+.calendar-table th {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.calendar-table td {
+    color: var(--text-color);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.calendar-table td.empty {
+    color: rgba(0, 0, 0, 0.15);
+}
+
+body.light-mode .calendar-table td.empty {
+    color: rgba(0, 0, 0, 0.1);
+}
+
+.calendar-table td.today {
+    background: linear-gradient(90deg, #ff8a65, #ff7043);
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 6px 14px rgba(255, 112, 67, 0.18);
+}
+
+body.light-mode .calendar-table td.today {
+    background: linear-gradient(90deg, #ff9a76, #ff8359);
+}
+
+@media (max-width: 420px) {
+    .clock {
+        width: 300px;
+        height: 300px;
+    }
+}
